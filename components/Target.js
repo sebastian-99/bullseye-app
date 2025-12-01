@@ -1,84 +1,85 @@
 import { View } from "react-native";
 import Svg, { Circle, Text } from "react-native-svg";
-const Target = ({ onPress }) => {
+import Color from "../utils/Color";
+const Target = ({ pressedPoint }) => {
   const TARGET_SIZE = 800;
   const center = TARGET_SIZE / 2;
   const rings = [
     // El círculo más grande (exterior) debe ir primero
     {
-      r: 225,
-      fill: "white",
-      points: 1,
-      textOffset: 213,
-      textColor: "black",
-      borderColor: "black",
-    }, // Anillo blanco exterior
-    {
       r: 200,
       fill: "white",
-      points: 2,
-      textOffset: 187,
+      points: 1,
+      textOffset: 190,
       textColor: "black",
       borderColor: "black",
     }, // Anillo blanco exterior
     {
-      r: 175,
+      r: 180,
+      fill: "white",
+      points: 2,
+      textOffset: 170,
+      textColor: "black",
+      borderColor: "black",
+    }, // Anillo blanco exterior
+    {
+      r: 160,
       fill: "black",
       points: 3,
-      textOffset: 162,
+      textOffset: 150,
       textColor: "white",
       borderColor: "black",
     }, // Anillo negro exterior
     {
-      r: 150,
+      r: 140,
       fill: "black",
       points: 4,
-      textOffset: 137,
+      textOffset: 130,
       textColor: "white",
       borderColor: "white",
     }, // Anillo negro exterior
     {
-      r: 125,
-      fill: "#86CBEA",
+      r: 120,
+      fill: Color.primaryBlue,
       points: 5,
-      textOffset: 112,
+      textOffset: 110,
       textColor: "black",
       borderColor: "black",
     }, // Anillo azul en medio
     {
       r: 100,
-      fill: "#86CBEA",
+      fill: Color.primaryBlue,
       points: 6,
-      textOffset: 87,
+      textOffset: 90,
       textColor: "black",
       borderColor: "black",
     }, // Anillo azul en medio
     {
-      r: 75,
+      r: 80,
       fill: "red",
       points: 7,
-      textOffset: 62,
+      textOffset: 70,
       textColor: "black",
       borderColor: "black",
     }, // Anillo rojo interior
     {
-      r: 50,
+      r: 60,
       fill: "red",
       points: 8,
-      textOffset: 40,
+      textOffset: 50,
       textColor: "black",
       borderColor: "black",
     }, // Anillo rojo interior
     {
-      r: 30,
+      r: 40,
       fill: "yellow",
       points: 9,
-      textOffset: 22,
+      textOffset: 30,
       textColor: "black",
       borderColor: "black",
     }, // Anillo amarillo interior
     {
-      r: 15,
+      r: 20,
       fill: "yellow",
       points: 10,
       textOffset: 0,
@@ -99,11 +100,9 @@ const Target = ({ onPress }) => {
             cx={center} // Mismo centro para todos
             cy={center} // Mismo centro para todos
             r={ring.r}
-            fill={ring.fill}
+            fill={pressedPoint == ring.points ? "green" : ring.fill}
             stroke={ring.borderColor} // Borde opcional
             strokeWidth="2"
-            onPressIn={() => onPress(ring.points)}
-            //onPress={() => onPress(ring.points)}
           />
         ))}
         {rings.map((ring, index) => (
