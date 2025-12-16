@@ -1,14 +1,20 @@
 import { useState, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, Alert, Vibration } from "react-native";
-import Button from "../components/UI/Button";
-import ButtonIcon from "../components/UI/ButtonIcon";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  Vibration,
+  useWindowDimensions,
+} from "react-native";
 import IconHeader from "../components/UI/IconHeader";
-import Target from "../components/Target";
+import Target from "../components/Target/Target";
 import PointsContainer from "../components/Target/PointsContainer";
 import SetsListContainer from "../components/Target/SetsListContainer";
+import ButtonsContainer from "../components/Target/ButtonsContainer";
 import ScoreCard from "../components/UI/ScoreCard";
 import { infoToast } from "../components/Notifications/Toast";
 import Color from "../utils/Color";
+import BREAKPOINTS from "../utils/Breakpoints";
 const TargetPage = ({ navigation }) => {
   const [points, setPoints] = useState({
     points: 0,
@@ -21,6 +27,7 @@ const TargetPage = ({ navigation }) => {
   });
   const [pointIsPressed, setPointIsPressed] = useState(null);
   const [toggleView, setToggleView] = useState(false);
+  const { width } = useWindowDimensions();
   //Función para añadir puntos y flecha
   const targetHit = (hitted) => {
     setPoints((prev) => {
@@ -171,22 +178,27 @@ const TargetPage = ({ navigation }) => {
             <View style={styles.containerScore}>
               <ScoreCard points={points.points} arrows={points.arrows} />
             </View>
-            <View style={styles.containerTarget}>
+            <View
+              style={[
+                styles.containerTarget,
+                {
+                  flex:
+                    BREAKPOINTS.isSmallDevice({ width: width }) ||
+                    BREAKPOINTS.isSmallestDevice({ width: width })
+                      ? 0.8
+                      : 0.6,
+                },
+              ]}
+            >
               <Target pressedPoint={pointIsPressed} />
             </View>
             <PointsContainer onPress={targetHit} />
-            <View style={styles.containerRollback}>
-              <ButtonIcon
-                icon="undo"
-                color={Color.primaryBlue}
-                onPress={undoHit}
-                disabled={points.arrows == 0 ? true : false}
-              />
-            </View>
-            <View style={styles.containerButton}>
-              <Button title="Fallida" color="orange" onPress={missedHit} />
-              <Button title="Reiniciar" color="red" onPress={resetGame} />
-            </View>
+            <ButtonsContainer
+              missedHit={missedHit}
+              resetGame={resetGame}
+              undoHit={undoHit}
+              arrows={points.arrows}
+            />
           </>
         ) : (
           <SetsListContainer setsData={series.series} />
@@ -200,6 +212,7 @@ const styles = StyleSheet.create({
   containerRoot: {
     backgroundColor: "#615f5fff",
     flex: 1,
+    paddingBottom: 20,
   },
   containerHeader: {
     flexDirection: "row",
@@ -224,23 +237,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   containerTarget: {
-    flex: 0.8,
     justifyContent: "center",
     alignItems: "center",
   },
   containerText: {
     flexDirection: "row",
     marginVertical: 10,
-  },
-  containerRollback: {
-    flex: 0.2,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  containerButton: {
-    flex: 0.2,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
   },
   text: {
     fontSize: 20,

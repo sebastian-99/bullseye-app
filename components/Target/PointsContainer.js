@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   containerPointsInner: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignItems: "center",
   },
 });
 
