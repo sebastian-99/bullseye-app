@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import ButtonPoint from "../UI/ButtonPoint";
-import Color from "../../utils/Color";
+import { COLORS } from "../../utils/Color";
 const PointsContainer = ({ onPress }) => {
   const buttons = {
     firstRow: [
@@ -28,14 +28,14 @@ const PointsContainer = ({ onPress }) => {
       },
       {
         number: 5,
-        color: Color.primaryBlue,
+        color: COLORS.primaryBlue,
         textColor: "black",
       },
     ],
     secondRow: [
       {
         number: 6,
-        color: Color.primaryBlue,
+        color: COLORS.primaryBlue,
         textColor: "black",
       },
       {

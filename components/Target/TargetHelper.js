@@ -1,4 +1,4 @@
-import Color from "../../utils/Color";
+import { COLORS } from "../../utils/Color";
 import BREAKPOINTS from "../../utils/Breakpoints";
 export const targetResolution = (width) => {
   const deviceWidth = width;
@@ -38,7 +38,7 @@ export const targetResolution = (width) => {
     }, // Anillo negro exterior
     {
       r: 120,
-      fill: Color.primaryBlue,
+      fill: COLORS.primaryBlue,
       points: 5,
       textOffset: 110,
       textColor: "black",
@@ -46,7 +46,7 @@ export const targetResolution = (width) => {
     }, // Anillo azul en medio
     {
       r: 100,
-      fill: Color.primaryBlue,
+      fill: COLORS.primaryBlue,
       points: 6,
       textOffset: 90,
       textColor: "black",

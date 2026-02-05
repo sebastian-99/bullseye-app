@@ -1,8 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import Toast from "react-native-toast-message";
 import TargetPage from "../../pages/TargetPage";
-import Color from "../../utils/Color";
+import TargetPageScore from "../../pages/TargetPageScore";
+import IconSlideModal from "../UI/IconSlideModal";
+import { COLORS } from "../../utils/Color";
 const Stack = createStackNavigator();
 
 const Navigation = () => {
@@ -17,8 +22,20 @@ const Navigation = () => {
               title: " ",
               headerTitleAlign: "center",
               headerStyle: {
-                backgroundColor: Color.primaryBlue,
+                backgroundColor: COLORS.primaryBlue,
               },
+            }}
+          />
+          <Stack.Screen
+            name="TargetScore"
+            component={TargetPageScore}
+            options={{
+              headerLeft: () => null,
+              headerTitle: () => <IconSlideModal />,
+              headerTitleAlign: "center",
+              presentation: "modal",
+              gestureEnabled: true,
+              ...TransitionPresets.ModalPresentationIOS,
             }}
           />
         </Stack.Navigator>

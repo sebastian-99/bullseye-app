@@ -1,6 +1,7 @@
-import { Text, View, FlatList, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
-import Color from "../../utils/Color";
+import { COLORS } from "../../utils/Color";
 import ScoreCard from "../UI/ScoreCard";
 const SetsListContainer = ({ setsData }) => {
   // Suma todos los puntos y flechas de la partida
@@ -11,7 +12,7 @@ const SetsListContainer = ({ setsData }) => {
         sum.totalArrows += game.totalArrows;
         return sum;
       },
-      { totalScore: 0, totalArrows: 0 }
+      { totalScore: 0, totalArrows: 0 },
     );
     return sumScore;
   };
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   containerHeader: {
     height: 50,
     flexDirection: "row",
-    backgroundColor: Color.primaryBlue,
+    backgroundColor: COLORS.primaryBlue,
     justifyContent: "center",
     alignItems: "center",
   },

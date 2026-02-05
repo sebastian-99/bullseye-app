@@ -1,4 +1,4 @@
-import { View, Dimensions, useWindowDimensions } from "react-native";
+import { View, useWindowDimensions } from "react-native";
 import Svg, { Circle, Text } from "react-native-svg";
 import { targetResolution } from "./TargetHelper";
 const Target = ({ pressedPoint }) => {

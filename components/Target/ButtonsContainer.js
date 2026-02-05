@@ -1,7 +1,7 @@
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Button from "../UI/Button";
 import ButtonIcon from "../UI/ButtonIcon";
-import COLOR from "../../utils/Color";
+import { COLORS } from "../../utils/Color";
 import BREAKPOINTS from "../../utils/Breakpoints";
 /**
  * @param {function} missedHit - Parametro que recibe para ejecutar función de flecha fallida.
@@ -19,7 +19,7 @@ const ContainerButton = ({ missedHit, resetGame, undoHit, arrows }) => {
         <View style={styles.containerRollback}>
           <ButtonIcon
             icon="undo"
-            color={COLOR.primaryBlue}
+            color={COLORS.primaryBlue}
             onPress={undoHit}
             disabled={arrows == 0}
           />
@@ -31,7 +31,7 @@ const ContainerButton = ({ missedHit, resetGame, undoHit, arrows }) => {
           BREAKPOINTS.isMediumDevice({ width: width })) && (
           <ButtonIcon
             icon="undo"
-            color={COLOR.primaryBlue}
+            color={COLORS.primaryBlue}
             onPress={undoHit}
             disabled={arrows == 0}
           />

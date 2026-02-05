@@ -2,7 +2,7 @@ import { Pressable, StyleSheet } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 /**
  *
- * @param {"Font" | "Material"} iconType - Es el tipo de libreia que se va a utilizar (FontAwesome o MaterialCommunityIcons).
+ * @param {"Font" | "Material"} iconType - Es el tipo de libreria que se va a utilizar (DEFAULT FontAwesome o MaterialCommunityIcons).
  */
 const IconHeader = ({
   iconColor = "white",

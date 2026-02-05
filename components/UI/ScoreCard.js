@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
-import Color from "../../utils/Color";
+import { COLORS } from "../../utils/Color";
 const ScoreCard = ({ points, arrows }) => {
   return (
     <View style={styles.containerCard}>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 100,
     borderRadius: 10,
-    backgroundColor: Color.primaryBlue,
+    backgroundColor: COLORS.primaryBlue,
     justifyContent: "center",
     alignItems: "center",
   },

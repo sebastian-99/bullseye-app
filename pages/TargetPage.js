@@ -9,11 +9,10 @@ import {
 import IconHeader from "../components/UI/IconHeader";
 import Target from "../components/Target/Target";
 import PointsContainer from "../components/Target/PointsContainer";
-import SetsListContainer from "../components/Target/SetsListContainer";
 import ButtonsContainer from "../components/Target/ButtonsContainer";
 import ScoreCard from "../components/UI/ScoreCard";
 import { infoToast } from "../components/Notifications/Toast";
-import Color from "../utils/Color";
+import { COLORS } from "../utils/Color";
 import BREAKPOINTS from "../utils/Breakpoints";
 const TargetPage = ({ navigation }) => {
   const [points, setPoints] = useState({
@@ -26,7 +25,6 @@ const TargetPage = ({ navigation }) => {
     series: [],
   });
   const [pointIsPressed, setPointIsPressed] = useState(null);
-  const [toggleView, setToggleView] = useState(false);
   const { width } = useWindowDimensions();
   //Función para añadir puntos y flecha
   const targetHit = (hitted) => {
@@ -126,13 +124,14 @@ const TargetPage = ({ navigation }) => {
     } else {
       Alert.alert(
         "¡Sin puntaje!",
-        "Tienes que haber tirado al menos una vez para cambiar de set."
+        "Tienes que haber tirado al menos una vez para cambiar de set.",
       );
     }
   };
 
   const toggleViewHelper = () => {
-    setToggleView((toggle) => !toggle);
+    //setToggleView((toggle) => !toggle);
+    navigation.navigate("TargetScore", { series: series.series });
   };
 
   useLayoutEffect(() => {
@@ -140,69 +139,51 @@ const TargetPage = ({ navigation }) => {
       title: `SET: ${series.set}`,
       headerRight: () => (
         <View style={styles.containerHeader}>
-          {!toggleView ? (
-            <>
-              <IconHeader
-                icon="list"
-                iconColor="#ffb162ff"
-                size={25}
-                onPress={toggleViewHelper}
-              />
-              <IconHeader
-                icon="plus"
-                iconColor="#ffb162ff"
-                size={25}
-                onPress={changeSet}
-                iconType="Material"
-              />
-            </>
-          ) : (
-            <IconHeader
-              icon="bullseye-arrow"
-              iconColor="#ffb162ff"
-              size={25}
-              onPress={toggleViewHelper}
-              iconType="Material"
-            />
-          )}
+          <IconHeader
+            icon="list"
+            iconColor="#ffb162ff"
+            size={25}
+            onPress={toggleViewHelper}
+          />
+          <IconHeader
+            icon="plus"
+            iconColor="#ffb162ff"
+            size={25}
+            onPress={changeSet}
+            iconType="Material"
+          />
         </View>
       ),
     });
-  }, [series, points, toggleView]);
+  }, [series, points]);
 
   return (
     <View style={styles.containerRoot}>
       <View style={styles.containerCol}>
-        {!toggleView ? (
-          <>
-            <View style={styles.containerScore}>
-              <ScoreCard points={points.points} arrows={points.arrows} />
-            </View>
-            <View
-              style={[
-                styles.containerTarget,
-                {
-                  flex:
-                    BREAKPOINTS.isSmallDevice({ width: width }) ||
-                    BREAKPOINTS.isSmallestDevice({ width: width })
-                      ? 0.8
-                      : 0.6,
-                },
-              ]}
-            >
-              <Target pressedPoint={pointIsPressed} />
-            </View>
-            <PointsContainer onPress={targetHit} />
-            <ButtonsContainer
-              missedHit={missedHit}
-              resetGame={resetGame}
-              undoHit={undoHit}
-              arrows={points.arrows}
-            />
-          </>
-        ) : (
-          <SetsListContainer setsData={series.series} />
-        )}
+        <View style={styles.containerScore}>
+          <ScoreCard points={points.points} arrows={points.arrows} />
+        </View>
+        <View
+          style={[
+            styles.containerTarget,
+            {
+              flex:
+                BREAKPOINTS.isSmallDevice({ width: width }) ||
+                BREAKPOINTS.isSmallestDevice({ width: width })
+                  ? 0.8
+                  : 0.6,
+            },
+          ]}
+        >
+          <Target pressedPoint={pointIsPressed} />
+        </View>
+        <PointsContainer onPress={targetHit} />
+        <ButtonsContainer
+          missedHit={missedHit}
+          resetGame={resetGame}
+          undoHit={undoHit}
+          arrows={points.arrows}
+        />
       </View>
     </View>
   );
@@ -210,7 +191,7 @@ const TargetPage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   containerRoot: {
-    backgroundColor: "#615f5fff",
+    backgroundColor: COLORS.backgroundGrey,
     flex: 1,
     paddingBottom: 20,
   },
@@ -228,28 +209,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  containerCard: {
-    width: 200,
-    height: 100,
-    borderRadius: 10,
-    backgroundColor: Color.primaryBlue,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   containerTarget: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  containerText: {
-    flexDirection: "row",
-    marginVertical: 10,
-  },
-  text: {
-    fontSize: 20,
-  },
-  textNumber: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
   icon: {
     marginRight: 5,
