@@ -1,11 +1,14 @@
 import { View, useWindowDimensions } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import Svg, { Circle, Text } from "react-native-svg";
 import { targetResolution } from "./TargetHelper";
 const Target = ({ pressedPoint }) => {
+  const route = useRoute();
+  const { bowStyle } = route.params;
   const { width } = useWindowDimensions();
   const TARGET_SIZE = 800;
   const center = TARGET_SIZE / 2;
-  const rings = targetResolution(width);
+  const rings = targetResolution({ width: width, bow: bowStyle });
   return (
     <View>
       <Svg

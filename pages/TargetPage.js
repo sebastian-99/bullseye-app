@@ -6,6 +6,7 @@ import {
   Vibration,
   useWindowDimensions,
 } from "react-native";
+import { HeaderBackButton } from "@react-navigation/elements";
 import IconHeader from "../components/UI/IconHeader";
 import Target from "../components/Target/Target";
 import PointsContainer from "../components/Target/PointsContainer";
@@ -14,7 +15,8 @@ import ScoreCard from "../components/UI/ScoreCard";
 import { infoToast } from "../components/Notifications/Toast";
 import { COLORS } from "../utils/Color";
 import BREAKPOINTS from "../utils/Breakpoints";
-const TargetPage = ({ navigation }) => {
+const TargetPage = ({ navigation, route }) => {
+  const bowStyle = route.params.bowStyle;
   const [points, setPoints] = useState({
     points: 0,
     arrows: 0,
@@ -106,13 +108,13 @@ const TargetPage = ({ navigation }) => {
           ...prev,
           set: newSet,
           series: [
-            ...prev.series,
             {
               set: curretnSet,
               points: currentHistory,
               totalPoints: totalPoints,
               totalArrows: totalArrows,
             },
+            ...prev.series,
           ],
         };
       });
@@ -130,8 +132,29 @@ const TargetPage = ({ navigation }) => {
   };
 
   const toggleViewHelper = () => {
-    //setToggleView((toggle) => !toggle);
     navigation.navigate("TargetScore", { series: series.series });
+  };
+
+  const backToHomeHelper = () => {
+    if (series.series.length > 0 && series.set > 0) {
+      Alert.alert(
+        "¡Tienes una partida en proceso!",
+        `¿Quieres continuar? Tus sets se eliminaran`,
+        [
+          {
+            text: "Continuar",
+            style: "cancel",
+            onPress: () => navigation.pop(),
+          },
+          {
+            text: "Cancelar",
+            style: "destructive",
+          },
+        ],
+      );
+    } else {
+      navigation.pop();
+    }
   };
 
   useLayoutEffect(() => {
@@ -153,6 +176,9 @@ const TargetPage = ({ navigation }) => {
             iconType="Material"
           />
         </View>
+      ),
+      headerLeft: (props) => (
+        <HeaderBackButton {...props} onPress={backToHomeHelper} />
       ),
     });
   }, [series, points]);

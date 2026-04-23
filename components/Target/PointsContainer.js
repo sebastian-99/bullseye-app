@@ -1,65 +1,13 @@
 import { View, StyleSheet } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import ButtonPoint from "../UI/ButtonPoint";
 import { COLORS } from "../../utils/Color";
+import { buttonsRecurve, buttonsCompound } from "./PointsContainerHelper";
 const PointsContainer = ({ onPress }) => {
-  const buttons = {
-    firstRow: [
-      {
-        number: 1,
-        color: "white",
-        textColor: "black",
-      },
-      {
-        number: 2,
-        color: "white",
-        textColor: "black",
-      },
-      {
-        number: 3,
-        color: "black",
-        textColor: "white",
-        borderColor: "white",
-      },
-      {
-        number: 4,
-        color: "black",
-        textColor: "white",
-        borderColor: "white",
-      },
-      {
-        number: 5,
-        color: COLORS.primaryBlue,
-        textColor: "black",
-      },
-    ],
-    secondRow: [
-      {
-        number: 6,
-        color: COLORS.primaryBlue,
-        textColor: "black",
-      },
-      {
-        number: 7,
-        color: "red",
-        textColor: "black",
-      },
-      {
-        number: 8,
-        color: "red",
-        textColor: "black",
-      },
-      {
-        number: 9,
-        color: "yellow",
-        textColor: "black",
-      },
-      {
-        number: 10,
-        color: "yellow",
-        textColor: "black",
-      },
-    ],
-  };
+  const route = useRoute();
+  const { bowStyle } = route.params;
+  const buttons = bowStyle == "recurve" ? buttonsRecurve : buttonsCompound;
+
   return (
     <View style={styles.containerPoints}>
       <View style={styles.containerPointsInner}>
