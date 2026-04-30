@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   containerList: {
     flex: 0.5,
     paddingHorizontal: 15,
+    backgroundColor: "#797979",
   },
   containerNoData: {
     flex: 1,
@@ -207,9 +208,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   bottomContainer: {
-    flex: 0.5,
+    flex: 0.4,
     alignItems: "center",
-    //justifyContent: "center",
+    justifyContent: "flex-start",
   },
   bottomTextTotal: {
     fontSize: 25,

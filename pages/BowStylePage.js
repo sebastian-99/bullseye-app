@@ -36,6 +36,14 @@ const BowStylePage = ({ navigation }) => {
             onPress={() => handleBowStyleSelection("compound")}
           />
         </View>
+        <View style={styles.containerInnerButton}>
+          <View style={styles.horizontalLine}></View>
+          <LargeButton
+            title="Contador Manual"
+            color={COLORS.primaryBlue}
+            onPress={() => navigation.navigate("manualCounter")}
+          />
+        </View>
       </View>
     </View>
   );
@@ -46,7 +54,6 @@ export default BowStylePage;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: COLORS.backgroundGrey,
   },
   container: {
     flex: 1,
@@ -54,12 +61,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   containerImage: {
-    flex: 0.4,
+    flex: 0.3,
     justifyContent: "center",
     alignItems: "center",
   },
   containerButtons: {
-    flex: 0.6,
+    flex: 0.7,
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -73,7 +80,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   containerInnerButton: {
-    marginVertical: 20,
+    marginVertical: 15,
+  },
+  horizontalLine: {
+    borderTopColor: "white",
+    borderTopWidth: 1,
+    marginBottom: 30,
   },
   image: {
     width: 200,

@@ -13,7 +13,6 @@ const TargetPageScore = ({ route }) => {
 
 const styles = StyleSheet.create({
   containerRoot: {
-    backgroundColor: COLORS.backgroundGrey,
     flex: 1,
     paddingBottom: 20,
   },

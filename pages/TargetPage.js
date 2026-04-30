@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,7 +6,6 @@ import {
   Vibration,
   useWindowDimensions,
 } from "react-native";
-import { HeaderBackButton } from "@react-navigation/elements";
 import IconHeader from "../components/UI/IconHeader";
 import Target from "../components/Target/Target";
 import PointsContainer from "../components/Target/PointsContainer";
@@ -135,28 +134,6 @@ const TargetPage = ({ navigation, route }) => {
     navigation.navigate("TargetScore", { series: series.series });
   };
 
-  const backToHomeHelper = () => {
-    if (series.series.length > 0 && series.set > 0) {
-      Alert.alert(
-        "¡Tienes una partida en proceso!",
-        `¿Quieres continuar? Tus sets se eliminaran`,
-        [
-          {
-            text: "Continuar",
-            style: "cancel",
-            onPress: () => navigation.pop(),
-          },
-          {
-            text: "Cancelar",
-            style: "destructive",
-          },
-        ],
-      );
-    } else {
-      navigation.pop();
-    }
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
       title: `SET: ${series.set}`,
@@ -177,11 +154,35 @@ const TargetPage = ({ navigation, route }) => {
           />
         </View>
       ),
-      headerLeft: (props) => (
-        <HeaderBackButton {...props} onPress={backToHomeHelper} />
-      ),
     });
   }, [series, points]);
+
+  useEffect(() => {
+    //Evento que detecta cuando se hace un pop a la ruta actual para controlar cuando se tiene sets y salte el alert para proceder
+    const unsubscribe = navigation.addListener("beforeRemove", (event) => {
+      event.preventDefault();
+      if (series.series.length > 0 && series.set > 0) {
+        Alert.alert(
+          "¡Tienes una partida en proceso!",
+          `¿Quieres continuar? Tus sets se eliminaran`,
+          [
+            {
+              text: "Cancelar",
+              style: "destructive",
+            },
+            {
+              text: "Continuar",
+              style: "cancel",
+              onPress: () => navigation.dispatch(event.data.action),
+            },
+          ],
+        );
+      } else {
+        navigation.dispatch(event.data.action);
+      }
+    });
+    return unsubscribe;
+  }, [navigation, series]);
 
   return (
     <View style={styles.containerRoot}>
@@ -217,7 +218,6 @@ const TargetPage = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   containerRoot: {
-    backgroundColor: COLORS.backgroundGrey,
     flex: 1,
     paddingBottom: 20,
   },
